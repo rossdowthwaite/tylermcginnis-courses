@@ -1,8 +1,8 @@
-# Fundamental of React Course
+# Tyler McGinnis Course Notes
 
 A compilation of notes taken while following Tyler McGinnis' tutorials [found here](https://learn.tylermcginnis.com/)
 
-###Courses done:
+### Courses done:
 
 * **React Fundamentals**
 * **Modern Javascript**
