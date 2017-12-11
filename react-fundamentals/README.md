@@ -92,4 +92,4 @@ Reacts lifecycle methods have two categories
 
 ### Lifecyle Chart
 
-![lifecycle](https://github.com/rossdowthwaite/react-fundamentals/blob/master/react-fundamentals/react-lifecycle.png?raw=true)
+![lifecycle](https://github.com/rossdowthwaite/tylermcginnis-courses/blob/master/react-fundamentals/react-lifecycle.png?raw=true)
