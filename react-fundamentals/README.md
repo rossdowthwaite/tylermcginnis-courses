@@ -1,4 +1,4 @@
-#ES6 Fundamentals
+# ES6 Fundamentals
 
 ## ECMA & Standardisation
 
