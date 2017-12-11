@@ -1,252 +1,95 @@
-# ES6 Fundamentals
+# Fundamental of React Course Notes
+[Found here](https://learn.tylermcginnis.com/);
 
-## ECMA & Standardisation
+## Introduction To Ecosystem
 
-### ECMA International
+### Composition
 
-The industry association dedicated to the Standardisation of information and communication systems
+  * Components manage their own state
+  * Build a bunch of small components to build bigger Components
+  * Encapsulate complexity into specific components, then put components together to build the interface
 
-### TC-39
+### Declarative
 
-**Technical Committee 39** is the committee responsible for pushing and agreeing changes to the standard.
+React is **mostly** declarative
 
-### Stages
- * **Stage 0** - Strawman
-Reviewed at a TC-39 meeting
- * **Stage 1** - Proposal
-Champion identified, Examples of usage. Identify concerns.
- * **Stage 2** - Draft
-Description of syntax.
- * **Stage 3** - Candidate
-Tests written. Spec signoff
+  * Imperative = How
+  * Declarative = What
+  * Declarative Programming is programming with declarations, i.e. declarative sentences.
 
-New release every year. Stage 4 features included in new release.
+**Declarative Pros**
 
-# New Cool Stuff
+  * Reduce Side Effects - modifying state, making an API request
+  * Minimise mutability
+  * More readable code
+  * Less bugs
 
-## Array/Object De-structuring! Yay!
+### Unidirectional Data Flow
 
-Array/object de-structuring allows us more easily extract each of the array/objects properties into user readable variables
+  * As the state updates the UI updates
+  * Only worry about managing state and the app with will update the UI
 
-```
-// Object de-structuring
-var user = {
-  name: 'Ross',
-  email: 'rossdowthwaite@gmail.com',
-  location: 'Brighton'
-}
-var { name, email, location } = user;
+### Explicit Mutations
 
-// Array de-structuring
-var user = ['Ross', 'rossdowthwaite@gmail.com', 'Brighton' ];
-var [name, email, location] = user;
-
-// CSV de-structuring
-var csv = 'Ross, rossdowthwaite@gmail.com, Brighton';
-var [name, email, location] = csv.split(',');
-```
-
-Rename properties during extraction:
-
-```
-var user = {
-  n: 'Ross',
-  e: 'rossdowthwaite@gmail.com',
-  l: 'Brighton'
-}
-var { n: name, e: email, l: location } = user;
-```
-
-Default values:
-
-```
-function getUser({name='defaultName', email='defaultEmail', location='defaultLocation' }){
-  // stuff
-}
-
-getUser({
-  name: 'Ross',
-  email: 'rossdowthwaite@gmail.com',
-  location: 'Brighton'
-})
-```
-
-## Shorthand property methods
-
-```
-function formatMessage (name, avatar) {
-  return {
-    name: name,
-    avatar: avatar,
-    save: function () {
-      //save
-    }
-  }
-}
-```
-can become
-
-```
-function formatMessage (name, avatar) {
-  return {
-    name, // no need for prop name if it is the same
-    avatar,
-    save () { // Can remove function def too :)
-      //save
-    }
-  }
-}
-```
-
-## Computed Property names
-old way
-
-```
-function objectify (key, value) {
-  let obj = {}
-    obj[key] = value;
-    return obj
-}
-```
-new way
-
-```
-function objectify () {
-  return {
-    [key]: value
-  }
-}
-```
-
-### Template strings
-```
-function greeting(name) {
-  return `hello, ${name}`;
-}
-```
-**note:** back ticks!!!
+  * Whenever the state updates, the UI updates.
+  * whenever we call `setState()` we know the UI will updates
 
 
-## Arrow functions
+## React Pieces
 
-* **Implicit return**: return block can be removed if all on same line. 
-* **this** context is passed down to the function scope. So no need to use ```bind()```
+  * **React Router** - Routing components
+  * **Webpack** - code bundler
+  * **Babel** - Code transformer. Transform JSX
+  * **Axios** - HTTP requests
 
-## Default Parameters
+## Core concepts
 
-**Old way**
+### Pure functions
 
-```
-function calculatePayment(price, salesTax, discount) {
-	salesTax = salesTax || 0.047;
-	discount = discount || 0 
-}
-```
-above method breaks when new value is ```0``` because it is falsey
+The whole concept of a pure function is **consistency** and **predictability**
 
-so...
+* Pure functions always return the same result given the same arguments.
+* Pure function's execution doesn't depend on the state of the application.
+* Pure functions don't modify the variables outside of their scope.
 
-```
-function calculatePayment(price, salesTax, discount) {
-	salesTax = typeof salesTax === 'undefined' ? 0.047 : salesTax;
-	discount = typeof discount === 'undefined' ? 0 : discount; 
-}
-```
-even worse :(
-
-**New way**
-
-```
-function calculatePayment(price, salesTax = 0.047, discount = 0) {
-	// 
-}
-```
-Wow! :)
-
-## Modules, Exports, Imports and named imports
+React's **render** method needs to be a pure function
 
 
-```
-// math.js
-export function add(x,y) {
-	return x + y
-}
+### Binding
 
-export function multiply(x,y) {
-	return x * y
-}
+'This' keyword
 
-export default function divide(x,y) {
-	return x / y
-}
+**Implicit Binding** - Left of the dot at Call Time
+**Explicit Binding** - Call, apply, bind
+**new Binding** - This is bound to the new object being constructed
+**window Binding** -  defaults to window object if a function is invoked with 'this' and none of the above.
 
-// main.js
-import divide, {add, mulitply} from './math'
-// or
-import * from './math'
+## Components
 
-add(1,2) // 3
-multiply(2,4) // 12
-```
+Component three fundamental parts:
 
-#### Named imports
+* state
+* Lifecyle events
+* UI
 
-**Old way**
+### Lifecycle events
 
-```
-import ReactRouter from 'react-router';
-const Route = ReactRouter.Route;
-const Link = ReactRouter.Link;
-const Router = ReactRouter.Router;
-```
+Reacts render method is a pure function, meaning in should not affect the state and only manage rendering to the UI.This includes setting props, making AJAX requests, adding and removing event listeners State should be managed outside using lifecycle methods.
 
-**New Way**
+Reacts lifecycle methods have two categories
 
-Because of de-structuring we can do this:
+* When a component gets mounted to the DOM and unmounted
+* When a component receives data
 
-```
-import { Route, Link, Router } from 'react-router';
-```
+#### Mounting/Un-mounting
 
-## Async/Await
+**Setting props** - Use `deafultProps` to set default props
+**Initial state** - Use ES6 constructor property. Use `this.setState` to pass in fn which return an obj that overwrites the State
+**Ajax requests** - Use `componentDidMount`. Called directly after the component is mounted to the DOM
+**Event Listeners** - For adding us same as above. For Removing us `componentwillUnmount`.
 
-**Allows you to write asynchronous code that appears sychronous**
+`shouldComponentUpdate` returns a boolean that will cause a re-render.
 
-**note:** 
+### Lifecyle Chart
 
- * Every async function you write will return a promise.
- * Every single thing you await will ordinarily be a promise.
-
-e.g. Given the promise below
-
-```
-// The promise 
-function getUser() {
-	return new Promise((resolve, reject) => {
-		setTimout(() => resolve({name: 'Ross'}), 200)
-	}
-}
-```
-We can then use async/await to get the result instead on using ```.then```
-
-```
-async function handleGetUser() {
-	var user = await getUser()
-	console.log(user);
-}
-```
-
-extended with error handling:
-
-```
-async function handleGetUser() {
-	try {
-		var user = await getUser()
-		console.log(user);
-	} catch (error) {
-		console.log('Error in handleGetUser', error)
-	}
-}
-```
-
- 
+![lifecycle](https://github.com/rossdowthwaite/react-fundamentals/blob/master/react-fundamentals/react-lifecycle.png?raw=true)
